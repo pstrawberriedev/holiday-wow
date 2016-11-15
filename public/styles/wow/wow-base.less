@@ -1,0 +1,261 @@
+/*
+  WoW Base Styling
+*/
+
+.wow-search {
+  position:relative;
+  display:block;
+  width:100%;
+  
+    input[type=search] { // Name
+      display:block;
+      position:relative;
+      .box-sizing(border-box);
+      float:left;
+      width:74%;
+      border:0;
+      margin:0;
+      padding:0;
+      font-size:1.5rem;
+      height:80px;
+      color:@color-dark;
+      padding-left:10px;
+      background:rgba(255,255,255,.8);
+      .shadow-1;
+      .font-primary-thin;
+      
+      @media(max-width:700px) {
+        float:none;
+        clear:both;
+        width:100%;
+        margin-bottom:15px;
+      }
+    }
+  
+    .awesomplete { // Search Autocomplete Plugin Wrapper
+      display:block;
+      position:relative;
+      float:left;
+      .box-sizing(border-box);
+      margin:0;
+      padding:0;
+      margin-left:1%;
+      width:25%;
+      height:80px;
+    }
+    input[type=text] { // Realm
+      width:100%;
+      border:0;
+      margin:0;
+      padding:0;
+      padding-left:10px;
+      height:80px;
+      font-size:1.5rem;
+      color:@color-dark;
+      background:rgba(255,255,255,.8);
+      .shadow-1;
+      .font-primary-thin;
+      
+      @media(max-width:700px) {
+        float:none;
+        clear:both;
+        width:100%;
+        height:50px;
+        margin-bottom:15px;
+        margin-left:0;
+      }
+    }
+  
+    #wow-search-submit {
+      background:rgba(55,180,55,.8);
+      color:@color-light;
+      font-size:1.5rem;
+      float:right;
+      width:25%;
+      margin:15px 0;
+      padding:15px 0;
+      .shadow-1;
+      .font-primary-thin;
+      text-align:center;
+      
+      @media(max-width:767px) {
+        float:none;
+        clear:both;
+        display:block;
+        width:300px;
+        margin:20px auto;
+      }
+      
+    }
+  
+}
+
+.wow-container {
+  
+  .wow-loader {
+    position:relative;
+    width:100%;
+    display:none;
+    
+    &.main {
+      margin:2rem 0;
+      text-align:center;
+    }
+  }
+  
+  .hero-container {
+    position:relative;
+    display:block;
+    width:100%;
+    .clearfix;
+  }
+  
+  .wow-error {
+    display:none;
+    position:relative;
+    padding:1rem;
+    font-size:1.6rem;
+    background:rgba(0,0,0,.9);
+    color:#CC3333;
+  }
+  
+  // Basic info
+  .hero-basic {
+    position:relative;
+    display:none;
+    background:rgba(0,0,0,.9);
+    color:@color-light;
+    padding:.6rem;
+    
+    .basic-info {
+      display:block;
+      float:left;
+      .box-sizing(border-box);
+      width:32%;
+      
+      @media(max-width:1130px) {
+        float:none;
+        clear:both;
+        width:100%;
+      }
+    }
+    
+    [data-wow] span {
+      font-size:.9rem;
+    }
+    
+    [data-wow=hero-name] {
+      display:block;
+      font-size:1.3rem;
+    }
+    
+    [data-wow=hero-image] {
+      height:auto;
+      display:block;
+      float:left;
+      margin:0 .6rem .6rem 0;
+      max-width: 120px;
+        &.horde {border-bottom: 3px solid #aa3333;}
+        &.alliance {border-bottom: 3px solid #3333aa;}
+    }
+    
+  }
+  
+  // Hero Item Panel (290px)
+  .item-info {
+      display:block;
+      position:relative;
+      .box-sizing(border-box);
+      width:226px;
+      height:auto;
+      .clearfix;
+    
+      @media(max-width:1130px) {
+        float:none;
+        clear:both;
+        width:100%;
+        margin-left:0;
+        .wrapper {
+          width:226px;
+          margin:0 auto;
+        }
+      }
+      
+    
+      .left,.right,.center {
+        display:block;
+        position:relative;
+        float:left;
+        height:384px;
+      }
+      .left { width:38px; }
+      .center {  width:150px; }
+      .right {  width:38px; }
+      
+      [data-wow=item-left],[data-wow=item-center],[data-wow=item-right] {
+        display:block;
+        position:relative;
+        margin:0 auto;
+        width:38px;
+        height:38px;
+        border:1px solid #666;
+        cursor:help;
+        margin-bottom:10px;
+        background:transparent url('../images/wow/missing.png') no-repeat center center;
+          img {
+            max-width:38px;
+            height:auto;
+          }
+      }
+    
+      [data-wow=item-center] {
+        position: absolute;
+        bottom: 0;
+        left: 30px;
+        &:last-child {
+          left:auto;
+          right:30px;
+        }
+      }
+      
+      [data-wow=item-level] {
+        display: block;
+        position: relative;
+        text-align: center;
+        font-size: .65rem;
+        text-transform: uppercase;
+        width: 80%;
+        margin: 0 auto;
+        border: 1px solid #666;
+        padding-top: 7px;
+        background: #002200;
+          span {
+            .font-primary-thin;
+            text-transform:none;
+            font-size:2rem;
+            display:block;
+          }
+      }
+    
+    }
+  
+}
+
+// WoW Background
+#wow-bg {
+  position:fixed;
+  top:0;
+  left:0;
+  bottom:0;
+  right:0;
+  width:100%;
+  height:100vh;
+  z-index:-2;
+  overflow:hidden;
+  background-color:#242424;
+  background:transparent url('../images/wow/wowbg.jpg') no-repeat center center;
+  .background-size(cover);
+}
+
+// Hide Cookie stuff
+.page-wow .cookie-info {display:none;}

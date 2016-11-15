@@ -1,0 +1,70 @@
+/*
+  Home Page
+*/
+
+.page-home {
+  
+  header[role=banner] {
+    color:@color-dark;
+  }
+  
+  .search-area {
+    width:50%;
+    margin:0 auto;
+    display:block;
+    position:relative;
+    color:@color-dark;
+    overflow:visible;
+    
+    input {
+      display:block;
+      position:relative;
+      width:100%;
+      border:0;
+      font-size:2.5rem;
+      padding:1rem .5rem;
+      color:@color-dark;
+      background:rgba(255,255,255,.8);
+      .shadow-2;
+      .font-primary-thin;
+      .transition(box-shadow .2s ease-in-out);
+      &:focus {
+        .shadow-3;
+      }
+    }
+    
+  }
+  
+  #recent-searches {
+    position:relative;
+    display:block;
+    width:50%;
+    margin:0 auto;
+    font-size:1.5rem;
+    .font-primary-thin;
+    background:rgba(255,255,255,.1);
+
+      p {
+        padding:.5rem;
+        margin-bottom:0;
+        cursor:default;
+        margin-top:1rem;
+      }
+      li {
+        margin:.5rem;
+        padding:.4rem .7rem;
+        cursor:pointer;
+        display:inline-block;
+        border:1px solid #aaa;
+        &:hover {background:rgba(0,0,0,.1);}
+        &.filler {
+          cursor:default;
+          display:block;
+          padding:0;
+          border:0;
+          &:hover {background:transparent;}
+        }
+    }
+  }
+
+}

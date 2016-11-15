@@ -1,0 +1,93 @@
+/* 
+  Fonts
+*/
+
+// Imports
+//@import url(https://fonts.googleapis.com/css?family=Roboto:400,100,300);
+
+// Local Roboto
+//@font-face {
+//	font-family: 'Roboto Thin';
+//	src: url('../fonts/Roboto-Thin.eot');
+//	src: local('☺'), url('../fonts/Roboto-Thin.woff') format('woff'), url('../fonts/Roboto-Thin.ttf') format('truetype'), url('../fonts/Roboto-Thin.svg') format('svg');
+//	font-weight: 100;
+//	font-style: normal;
+//}
+//
+//@font-face {
+//	font-family: 'Roboto Regular';
+//	src: url('../fonts/Roboto-Regular.eot');
+//	src: local('☺'), url('../fonts/Roboto-Regular.woff') format('woff'), url('../fonts/Roboto-Regular.ttf') format('truetype'), url('../fonts/Roboto-Regular.svg') format('svg');
+//	font-weight: 400;
+//	font-style: normal;
+//}
+//
+//@font-face {
+//	font-family: 'Roboto Medium';
+//	src: url('../fonts/Roboto-Medium.eot');
+//	src: local('☺'), url('../fonts/Roboto-Medium.woff') format('woff'), url('../fonts/Roboto-Medium.ttf') format('truetype'), url('../fonts/Roboto-Medium.svg') format('svg');
+//	font-weight: 500;
+//	font-style: normal;
+//}
+
+// Font Stacks
+@font-primary: 'Roboto',Arial,Helvetica Neue,Helvetica,sans-serif;
+
+// Helpers
+.font-primary {font-family:@font-primary;font-weight:400;}
+.font-primary-thin {font-family:@font-primary;font-weight:100;}
+.font-primary-bold {font-family:@font-primary;font-weight:700;}
+
+// Sizes
+html {
+  
+  font-size: 100%;
+  line-height: 1.3;
+  .font-primary;
+  font-weight:normal;
+  color: @color-dark;
+  
+}
+
+body {
+  
+  font-size:1.1rem;
+  
+}
+
+h1,h2, h3,h4,h5,h6 {
+  
+  .font-primary-bold;
+  
+  span { .font-primary-thin; }
+  
+}
+
+h1 { font-size: 4.3rem; }
+h2 { font-size: 3.3rem; }
+h3 { font-size: 2.4rem; }
+h4 { font-size: 1.8rem; }
+h5 { font-size: 1.2rem; }
+
+
+// Links
+a, a:link, a:visited, a:hover, a:active {color:inherit;text-decoration:none;}
+a.link:hover {text-decoration:underline;}
+
+
+// Lists
+ul li {
+  list-style-type:disc;
+}
+
+ol li {
+  list-style-type:decimal-leading-zero;
+}
+
+.text-center {text-align:center;}
+
+.padded-list {
+  li {
+    padding-left:.7rem;
+  }
+}

@@ -1,0 +1,115 @@
+{{> header}}
+
+<main id="main-content">
+    
+    <header role="banner" class="color-light">
+<!--
+      <h1>
+        <span>WoW Hero Lookup</span>
+      </h1>
+-->
+    </header>
+
+    <!-- WoW Search Box -->
+    <section class="container-fluid wow-search">
+      
+      <div class="row">
+        <div class="col-sm-10 col-sm-push-1 col-xs-12">
+          
+          <!-- Hero + Server -->
+          <div class="clearfix">
+            <input id="wow-search" type="search" name="wow-search" placeholder=" Name" />
+            <input id="wow-search-realm" type="text" name="wow-search-realm" placeholder=" Realm" />
+            <!--
+            <select id="wow-search-realm" name="wow-search-realm">
+              <option value="server">Server</option>
+            </select>
+            -->
+          </div>
+          
+          <!-- Submit -->
+          <div class="clearfix">
+            <a id="wow-search-submit" href="##">Look up</a>
+          </div>
+            
+        </div>
+      </div>
+      
+    </section>
+
+    <!-- WoW Search Results -->
+    <section class="container-fluid wow-container">
+  
+      
+      <div class="row">
+        <div class="col-sm-10 col-sm-push-1 col-xs-12">
+
+          <div class="hero-container">
+            
+            <!-- Hero Header -->
+            <div class="hero-basic clearfix">
+              
+              <div class="basic-info">
+                <img data-wow="hero-image" />
+                <div data-wow="hero-name"></div>
+              </div>
+              
+            </div>
+            
+            <!-- Hero Item Panel -->
+            <div class="hero-basic clearfix">
+              
+              <div class="item-info">
+                <div class="wrapper">
+                  <div class="left">
+                    <div data-wow="item-left" data-slot="head"></div>
+                    <div data-wow="item-left" data-slot="neck"></div>
+                    <div data-wow="item-left" data-slot="shoulder"></div>
+                    <div data-wow="item-left" data-slot="back"></div>
+                    <div data-wow="item-left" data-slot="chest"></div>
+                    <div data-wow="item-left" data-slot="shirt"></div>
+                    <div data-wow="item-left" data-slot="tabard"></div>
+                    <div data-wow="item-left" data-slow="wrist"></div>
+                  </div>
+                  <div class="center">
+                    <div data-wow="item-level"></div>
+                    <div data-wow="item-center" data-slot="mainHand"></div>
+                    <div data-wow="item-center" data-slot="offHand"></div>
+                  </div>
+                  <div class="right">
+                    <div data-wow="item-right" data-slot="hands"></div>
+                    <div data-wow="item-right" data-slot="waist"></div>
+                    <div data-wow="item-right" data-slot="legs"></div>
+                    <div data-wow="item-right" data-slot="feet"></div>
+                    <div data-wow="item-right" data-slot="finger1"></div>
+                    <div data-wow="item-right" data-slot="finger2"></div>
+                    <div data-wow="item-right" data-slot="trinket1"></div>
+                    <div data-wow="item-right" data-slot="trinket2"></div>
+                  </div>
+                </div>
+              </div>
+              
+            </div>
+            
+          </div>
+            
+        </div>
+      </div>
+      
+      <div class="row">
+        <div class="col-sm-10 col-sm-push-1 col-xs-12">
+          <div class="wow-error main"></div>
+        </div>
+      </div>
+      
+      <div class="wow-loader main">
+        <img src="images/wow/loader_transparent_64.gif" />
+      </div>
+    </section>
+  
+</main>
+
+<div id="wow-bg"></div>
+<div id="snow"></div>
+
+{{> footer}}
