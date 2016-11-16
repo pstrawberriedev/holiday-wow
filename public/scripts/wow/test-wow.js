@@ -3,9 +3,13 @@
   Grap some WoW info via front-end (insecure local test)
 */
 
-
 console.log('--> test-wow.js');
 console.warn('[test-wow.js - Careful, API Key is exposed!]');
+
+// Helper to Capitalize first word of string
+String.prototype.capitalize = function() {
+    return this.charAt(0).toUpperCase() + this.slice(1);
+}
 
 // Define WoW UI vars
 //
@@ -225,29 +229,64 @@ function getWowFromSearch(info) {
     }
     
     //Insert Character Image
-    var crudeImage = data.thumbnail;
+    var crudeImage = data.thumbnail ? data.thumbnail : '';
     var baseImageUrl = 'http://render-api-us.worldofwarcraft.com/static-render/us/';
     var fullImageVariant = crudeImage.replace('-avatar.jpg', '-profilemain.jpg');
     var completedImage = baseImageUrl + fullImageVariant;
+    
     $heroPicture.addClass(cleanFaction.toLowerCase());
     $heroPicture.attr('src', completedImage);
-    
     $basicArea.fadeIn(180);
     $heroName.html(data.name + ' <br /><span>(' + data.realm + ' / ' + cleanFaction + ')</span>' + '<br />' + '<span>Level ' + data.level + ' ' + ' ' + cleanRace + ' ' + cleanClass + '</span>' + '<br />' + '<span>');
     
     //Insert Character Items
     // http://us.media.blizzard.com/wow/icons/36/[ITEM NAME HERE].jpg
+    //
+    var $tooltipContainer = $('#wow-tooltips');
     var $itemsContainer = $('.item-info');
     var $itemLevel = $('[data-wow="item-level"]');
     
     // Loop Items
-    var heroItems = data.items
+    var heroItems = data.items;
     var itemBaseUrl = 'http://us.media.blizzard.com/wow/icons/36/';
     
     $.each(heroItems, function(key, value) {
       var slot = key;
       var icon = value.icon ? value.icon : value;
       var name = value.name;
+      var quality = value.quality;
+      var level = value.itemLevel;
+      var armor = value.armor;
+      var stats = value.stats;
+      var cleanStats = {};
+      
+      // Get name of item quality
+      switch(quality) {
+        case 0: quality = 'poor'; break;
+        case 1: quality = 'common'; break;
+        case 2: quality = 'uncommon'; break;
+        case 3: quality = 'rare'; break;
+        case 4: quality = 'epic'; break;
+        case 5: quality = 'legendary'; break;
+        case 6: quality = 'artifact'; break;
+        case 7: quality = 'heirloom'; break;
+        case 8: quality = 'token'; break;
+        default: quality = 'common'; break;
+      }
+      
+      // Get stats from array
+      if(stats != undefined) {
+        //console.log(stats);
+        var i = 0;
+        $.each(stats, function(key, value, i) {
+          i++;
+          cleanStats.stat = value.stat;
+          cleanStats.amount = value.amount;
+          console.log(cleanStats);
+        });
+      }
+      //console.log(stats);
+      
       
       if(name != undefined) { //populate images, skip item levels
         $('[data-slot="' + slot + '"]').html('<img src="' + itemBaseUrl + icon + '.jpg" />');
@@ -257,8 +296,50 @@ function getWowFromSearch(info) {
         $itemLevel.html('Item Level <span>' + value + '</span>');
       }
       
+      //Populate Tooltips
+      var tooltipOpen = '<div class="item-tooltip" data-wow-tooltip="' + slot + '">';
+      var tooltipClose = '</div>';
+      var tooltipName = '<span class="item-name color-item-' + quality + '">' + name + '</span>';
+      var tooltipLevel = '<span class="item-level color-item-level">Item Level ' + level + '</span>';
+      var tooltipSlot = '<span class="item-slot">' + slot.capitalize() + '</span>';
+      var tooltipQuality = '<span class="item-quality color-item-uncommon">' + quality.capitalize() + '</span>';
+      if(armor != 0) {
+        var tooltipArmor = '<span class="item-armor">' + armor + ' Armor</span>';
+      } else {
+        var tooltipArmor = '';
+      }
+      
+      var tooltipStats = '<span class="item-stat">+' + cleanStats.amount + ' ' + cleanStats.stat + '</span>';
+      
+      if(name != undefined) {
+        $tooltipContainer.append(
+          tooltipOpen +
+          tooltipName +
+          tooltipQuality +
+          tooltipLevel +
+          tooltipSlot +
+          tooltipArmor +
+          tooltipStats +
+          tooltipClose
+        );
+      }
+      
     });
     
   }
   
 }
+
+// Item Tooltips - Follow Cursor
+//
+$('.item-info [data-wow]').mousemove(function(e) {
+    if ($(this).attr('data-slot') != "") {
+        var slotName = $(this).attr('data-slot');
+        $('[data-wow-tooltip="' + slotName + '"]').css('left', e.clientX + 10).css('top', e.clientY + 10).addClass($(this).attr('class'));
+        $('[data-wow-tooltip="' + slotName + '"]').show();
+    }
+});
+$('.item-info [data-wow]').mouseleave(function (e) {
+    var slotName = $(this).attr('data-slot');
+    $('[data-wow-tooltip="' + slotName + '"]').hide();
+});

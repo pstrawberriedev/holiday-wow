@@ -4,61 +4,7 @@
 
 console.log('--> content.js');
 
-// Count the Cookies!
-//
-var cookieCount = Cookies.getJSON();
-var cookieCountNumber = 0;
-function countCookies() {
-  for (var key in cookieCount) {
-     if (cookieCount.hasOwnProperty(key)) {
-        var obj = cookieCount[key];
-        for (var prop in obj) {
-           if (obj.hasOwnProperty(prop)) {
-              //console.log(prop + ": " + obj[prop]);
-              cookieCountNumber++;
-           }
-        }
-     }
-  }
-  $('main header[role=banner]').prepend('<span class="cookie-info">Cookies: ' + cookieCountNumber + '<br /></span>');
-};
-countCookies();
 
-// Submit a form via AJAX
-//
-$('.search-area').on('submit', function (e) {
-  e.preventDefault();
-  
-  if($('#search-box').val() != '') {
-    
-    var searchData = {
-      'query' : $('#search-box').val()
-    };
-    
-    $.ajax({
-      url:'/api/user/',
-      type:'POST',
-      data:searchData,
-      encode: true
-    })
-    .always(function(data) {
-      console.log('Submitted to /api/user: ' + JSON.stringify(searchData) );
-    })
-    .done(function(data) {
-      console.log('Submition Success!');
-    })
-    .fail(function(xhr) {
-      console.log('Error submitting form: ');
-      console.log(xhr);
-    });
-
-  } else {
-    
-    $('.search-error').append('Error: Search field is blank.').show();
-    
-  }
-
-});
 // Holiday Snow!
 // a Pen by DIACO : twitter.com/Diaco_ml  ||  codepen.io/MAW
 TweenLite.set("#snow",{perspective:600})
