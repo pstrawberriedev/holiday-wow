@@ -164,7 +164,6 @@ function getWowFromSearch(info) {
         console.log('xhr: ' + JSON.stringify(xhr));
         console.log('Status: ' + JSON.stringify(status));
         console.log('Error: ' + JSON.stringify(error));
-        //$mainError.html('xhr: ' + JSON.stringify(xhr) + '<br />Error: ' + JSON.stringify(status) + '<br />' + JSON.stringify(error));
       }
       
     }
@@ -246,6 +245,10 @@ function getWowFromSearch(info) {
     var $itemsContainer = $('.item-info');
     var $itemLevel = $('[data-wow="item-level"]');
     
+    // Reset tooltip container (in case somebody searches back to back)
+    $tooltipContainer.html('');
+    $('.item-info [data-wow]').html('');
+    
     // Loop Items
     var heroItems = data.items;
     var itemBaseUrl = 'http://us.media.blizzard.com/wow/icons/36/';
@@ -257,8 +260,6 @@ function getWowFromSearch(info) {
       var quality = value.quality;
       var level = value.itemLevel;
       var armor = value.armor;
-      var stats = value.stats;
-      var cleanStats = {};
       
       // Get name of item quality
       switch(quality) {
@@ -274,21 +275,7 @@ function getWowFromSearch(info) {
         default: quality = 'common'; break;
       }
       
-      // Get stats from array
-      if(stats != undefined) {
-        //console.log(stats);
-        var i = 0;
-        $.each(stats, function(key, value, i) {
-          i++;
-          cleanStats.stat = value.stat;
-          cleanStats.amount = value.amount;
-          console.log(cleanStats);
-        });
-      }
-      //console.log(stats);
-      
-      
-      if(name != undefined) { //populate images, skip item levels
+      if(name != undefined) { //populate images, skip item levels 
         $('[data-slot="' + slot + '"]').html('<img src="' + itemBaseUrl + icon + '.jpg" />');
       }
       
@@ -301,15 +288,16 @@ function getWowFromSearch(info) {
       var tooltipClose = '</div>';
       var tooltipName = '<span class="item-name color-item-' + quality + '">' + name + '</span>';
       var tooltipLevel = '<span class="item-level color-item-level">Item Level ' + level + '</span>';
-      var tooltipSlot = '<span class="item-slot">' + slot.capitalize() + '</span>';
+      var tooltipSlot = '<span class="item-slot">' + slot.capitalize().replace('2', '').replace('1','') + '</span>';
       var tooltipQuality = '<span class="item-quality color-item-uncommon">' + quality.capitalize() + '</span>';
+      
       if(armor != 0) {
         var tooltipArmor = '<span class="item-armor">' + armor + ' Armor</span>';
       } else {
         var tooltipArmor = '';
       }
       
-      var tooltipStats = '<span class="item-stat">+' + cleanStats.amount + ' ' + cleanStats.stat + '</span>';
+      var tooltipStats = '<div class="item-stats ' + slot + '"></div>';
       
       if(name != undefined) {
         $tooltipContainer.append(
@@ -322,8 +310,93 @@ function getWowFromSearch(info) {
           tooltipStats +
           tooltipClose
         );
+        
       }
       
+      // Write code to check if anything is unequipped and display "[slot name] (unequipped)"
+      //
+      
+    });
+    
+    // Loop back through and append item stats
+    $.each(heroItems, function(key, value) {
+      var slot = key;
+      var stats = value.stats;
+      var $statsContainer = $('.item-stats.' + slot);
+      
+      // Get item stats from array
+      if(stats != undefined) {
+        for (var i = 0; i < stats.length; i++) {
+          switch(stats[i].stat) {
+            case 0:stats[i].stat = "Mana";break;
+            case 1:stats[i].stat = "Health";break;
+            case 3:stats[i].stat = "Agility";break;
+            case 4:stats[i].stat = "Strength";break;
+            case 5:stats[i].stat = "Intellect";break;
+            case 6:stats[i].stat = "Spirit";break;
+            case 7:stats[i].stat = "Stamina";break;
+            case 12:stats[i].stat = "Defense";break;
+            case 13:stats[i].stat = "Dodge";break;
+            case 14:stats[i].stat = "Parry";break;
+            case 15:stats[i].stat = "Block";break;
+            case 16:stats[i].stat = "Hit (Melee)";break;
+            case 17:stats[i].stat = "Hit (Ranged)";break;
+            case 18:stats[i].stat = "Hit (Spell)";break;
+            case 19:stats[i].stat = "Critical Strike (Melee)";break;
+            case 20:stats[i].stat = "Critical Strike (Ranged)";break;
+            case 21:stats[i].stat = "Critical Strike (Spell)";break;
+            case 22:stats[i].stat = "Hit Avoidance (Melee)";break;
+            case 23:stats[i].stat = "Hit Avoidance (Ranged)";break;
+            case 24:stats[i].stat = "Hit Avoidance (Spell)";break;
+            case 25:stats[i].stat = "Critical Strike Avoidance (Melee)";break;
+            case 26:stats[i].stat = "Critical Strike Avoidance (Ranged)";break;
+            case 27:stats[i].stat = "Critical Strike Avoidance (Spell)";break;
+            case 28:stats[i].stat = "Haste (Melee)";break;
+            case 29:stats[i].stat = "Haste (Ranged)";break;
+            case 30:stats[i].stat = "Haste (Spell)";break;
+            case 31:stats[i].stat = "Hit";break;
+            case 32:stats[i].stat = "Critical Strike";break;
+            case 33:stats[i].stat = "Hit Avoidance";break;
+            case 34:stats[i].stat = "Critical Strike Avoidance";break;
+            case 35:stats[i].stat = "PvP Resilience";break;
+            case 36:stats[i].stat = "Haste";break;
+            case 37:stats[i].stat = "Expertise";break;
+            case 38:stats[i].stat = "Attack Power";break;
+            case 39:stats[i].stat = "Ranged Attack Power";break;
+            case 40:stats[i].stat = "Versatility";break;
+            case 41:stats[i].stat = "Bonus Healing";break;
+            case 42:stats[i].stat = "Bonus Damage";break;
+            case 43:stats[i].stat = "Mana Regeneration";break;
+            case 44:stats[i].stat = "Armor Penetration";break;
+            case 45:stats[i].stat = "Spell Power";break;
+            case 46:stats[i].stat = "Health Per 5 Sec.";break;
+            case 47:stats[i].stat = "Spell Penetration";break;
+            case 48:stats[i].stat = "Block Value";break;
+            case 49:stats[i].stat = "Mastery";break;
+            case 50:stats[i].stat = "Bonus Armor";break;
+            case 51:stats[i].stat = "Fire Resistance";break;
+            case 52:stats[i].stat = "Frost Resistance";break;
+            case 53:stats[i].stat = "Holy Resistance";break;
+            case 54:stats[i].stat = "Shadow Resistance";break;
+            case 55:stats[i].stat = "Nature Resistance";break;
+            case 56:stats[i].stat = "Arcane Resistance";break;
+            case 57:stats[i].stat = "PvP Power";break;
+            case 58:stats[i].stat = "Amplify";break;
+            case 59:stats[i].stat = "Multistrike";break;
+            case 60:stats[i].stat = "Readiness";break;
+            case 61:stats[i].stat = "Speed";break;
+            case 62:stats[i].stat = "Leech";break;
+            case 63:stats[i].stat = "Avoidance";break;
+            case 64:stats[i].stat = "Indestructible";break;
+            case 65:stats[i].stat = "Unused 7";break;
+            case 66:stats[i].stat = "Cleave";break;
+            case 67:stats[i].stat = "Versatility";break; 
+          }
+          $statsContainer.append(
+            '<span class="item-stat">+' + stats[i].amount + ' ' + stats[i].stat + '</span>'
+          );
+        }
+      }
     });
     
   }

@@ -237,6 +237,17 @@
           }
       }
     
+      //Backgrounds for commonly unequipped items
+      [data-slot] {
+        background-color:transparent;
+        background-position:center center;
+        background-repeat:no-repeat;
+        .background-size(cover);
+      }
+      [data-slot=shirt] { background-image:url('../images/wow/item-shirt.png'); }
+      [data-slot=tabard] { background-image:url('../images/wow/item-tabard.png'); }
+      [data-slot=offHand] { background-image:url('../images/wow/item-offHand.png'); }
+    
     }
   
 }
@@ -257,9 +268,13 @@
       display:block;
       position:relative;
       font-size:.72rem;
+      .font-primary;
         &.item-name {
           font-size:.8rem;
           .font-primary-bold;
+        }
+        &.item-stat {
+          color:#999;
         }
     }
     
