@@ -13,6 +13,7 @@ String.prototype.capitalize = function() {
 
 // Define Top-Level WoW UI vars
 //
+var $toggleSearch = $('#wow-toggle-search');
 var $mainSearch = $('.wow-search');
 var $mainLoader = $('.wow-loader');
 var $mainArea = $('.wow-container');
@@ -22,14 +23,17 @@ var $heroSearch = $('#wow-search');
 var $realmSearch = $('#wow-search-realm');
 var $searchButton = $('#wow-search-submit');
 
-// Shrink/Expand Search Area
-//
-function searchOpen() {
-  TweenLite.to($mainSearch, .35, { autoAlpha: 1, zIndex:800, ease: Power1.easeInOut });
-}
-function searchClose() {
+// Show/Hide WoW Search Area
+$toggleSearch.on('click', function() {
+  if(!$(this).hasClass('active')) {
+    $mainSearch.fadeIn(180);
+    $(this).addClass('active');
+  } else {
+    $mainSearch.fadeOut(180);
+    $(this).removeClass('active');
+  }
   
-}
+});
 
 // Populate Realms List
 //
@@ -99,7 +103,7 @@ $searchButton.on('click', function() {
 function buildUrl(calltype, server, name) {
   
   var baseUrl = 'https://us.api.battle.net/wow/';
-  var secretUrl = '?fields=items&locale=en_US&jsonp=apiCalled&apikey=cp9c5gugfpezfeewpmj26bme5cehdvx4';
+  var secretUrl = '?fields=items,quests&locale=en_US&jsonp=apiCalled&apikey=' + wowKey;
   var finishedUrl = baseUrl + calltype + '/' + server + '/' + name + secretUrl;
   
   if(finishedUrl) {

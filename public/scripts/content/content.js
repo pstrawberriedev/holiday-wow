@@ -5,11 +5,11 @@
 console.log('--> content.js');
 
 
-// Holiday Snow!
+// Holiday Snow (turned WoW)!
 // a Pen by DIACO : twitter.com/Diaco_ml  ||  codepen.io/MAW
 TweenLite.set("#snow",{perspective:600})
 
-var total = 12;
+var total = 32;
 var warp = document.getElementById("snow"),	w = window.innerWidth , h = window.innerHeight;
  
  for (i=0; i<total; i++){ 
@@ -20,7 +20,7 @@ var warp = document.getElementById("snow"),	w = window.innerWidth , h = window.i
  }
  
  function animm(elm){   
-   TweenMax.to(elm,R(8,15),{y:h+100,ease:Linear.easeNone,repeat:-1,delay:-15});
+   TweenMax.to(elm,R(3,10),{y:h+100,ease:Linear.easeNone,repeat:-1,delay:-15});
    TweenMax.to(elm,R(4,8),{x:'+=100',rotationZ:R(0,180),repeat:-1,yoyo:true,ease:Sine.easeInOut});
    TweenMax.to(elm,R(2,8),{rotationX:R(0,360),rotationY:R(0,360),repeat:-1,yoyo:true,ease:Sine.easeInOut,delay:-5});
  };
