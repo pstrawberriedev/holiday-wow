@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <!-- Meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    
+    <!-- Title -->
+    <title>
+      {{global.title}}
+      {{#if page}} | {{page}} {{/if}}
+       | {{global.desc}}
+    </title>
+
+    <!-- Fonts: Roboto -->
+    <link href="https://fonts.googleapis.com/css?family=Roboto:100,400,700" rel="stylesheet">
+   
+    <!-- CSS: Bundled Core -->
+    <link href="styles/master.css" rel="stylesheet">
+
+    <!-- Pre-Render JS -->
+
+
+  </head>
+  
+  <body class="{{#if page}}page-{{toLowerCase page}}{{/if}}">
+    
+    <!-- Navigation -->
+    <a id="mobile-menu" href="##">
+      <span class="hammy-special">
+        <span class="fir"></span>
+        <span class="sec"></span>
+        <span class="thi"></span>
+      </span>
+    </a>
+    
+    <ul id="nav-mobile-menu" role="menubar" aria-hidden="true">
+       
+        <!-- Nav Master Links -->
+        <li role="menu">
+          <a href="/">Character Lookup</a>
+        </li>
+        <li aria-haspopup="true" role="menu" data-mobile-opens="a">
+          <a href="##" aria-expanded="false">Resources</a>
+        </li>
+
+        <!-- Nav Submenus -->
+
+        <!-- Ding -->
+        <ul data-mobile-submenu="a" class="second">
+          <li class="back">
+            <a href="##">
+                Back <span class="sr-only">go back to previous menu</span>
+            </a>
+          </li>
+          <li>
+            <a href="https://dev.battle.net/io-docs">Bnet API Docs</a>
+          </li>
+          <li>
+            <a href="https://gist.github.com/Mischanix/d8f7a5f67d1b012987db#file-dump_bonus_stats-lua-L11">Item Stats Reference
+            </a>
+          </li>
+          <li>
+            <a href="https://github.com/Lascorbe/GuildBrowser/blob/master/GuildBrowser/wow%20data.txt">URL References
+            </a>
+          </li>
+          <li>
+            <a href="http://wowwiki.wikia.com/wiki/API_ITEM_QUALITY_COLORS">Item Colors Reference</a>
+          </li>
+        </ul>
+        
+      </ul>
+
+<a id="wow-toggle-search" class="active">
+  <img src="images/wow/icon-search.png" />
+</a>
+
+<main id="main-content">
+
+    <!-- WoW Search Box -->
+    <section class="container-fluid wow-search">
+      
+      <div class="row">
+        <div class="col-xs-12">
+          
+          <!-- Hero + Server + Submit -->
+          <div class="clearfix">
+            <input id="wow-search" type="search" name="wow-search" placeholder=" Name" />
+            <input id="wow-search-realm" type="text" name="wow-search-realm" placeholder=" Realm" />
+            <a id="wow-search-submit" href="##">Look up</a>
+          </div>
+            
+        </div>
+      </div>
+      
+    </section>
+
+    <!-- WoW Search Results -->
+    <section class="container-fluid wow-container">
+      
+      <div class="row">
+        <div class="col-sm-10 col-sm-push-1 col-xs-12">
+          <div class="wow-error main"></div>
+        </div>
+      </div>
+      
+      <div class="row hero-container">
+        
+        <div class="hero-empty col-sm-4">
+            
+          <!-- Hero Basic Panel -->
+          <div class="hero-panel clearfix">
+
+            <!-- Hero Image -->
+            <img data-wow="hero-image" />
+
+            <!-- Items & Character Meta -->
+            <div class="item-info">
+              <div class="wrapper">
+                <div class="left">
+                  <div data-wow="item-left" data-slot="head"></div>
+                  <div data-wow="item-left" data-slot="neck"></div>
+                  <div data-wow="item-left" data-slot="shoulder"></div>
+                  <div data-wow="item-left" data-slot="back"></div>
+                  <div data-wow="item-left" data-slot="chest"></div>
+                  <div data-wow="item-left" data-slot="shirt"></div>
+                  <div data-wow="item-left" data-slot="tabard"></div>
+                  <div data-wow="item-left" data-slot="wrist"></div>
+                </div>
+                <div class="center">
+                  <div class="hero-meta">
+                    <span data-meta="hero-name"></span>
+                    <span data-meta="hero-level"></span>
+                  </div>
+                  <div class="hero-meta">
+                    <span data-meta="hero-server"></span>
+                    <span data-meta="hero-faction"></span>
+                  </div>
+                  <div class="hero-meta">
+                    <span data-meta="hero-class"></span>
+                    <span data-meta="hero-race"></span>
+                  </div>
+                  <div data-wow="item-level"></div>
+                  <div data-wow="item-center" data-slot="mainHand"></div>
+                  <div data-wow="item-center" data-slot="offHand"></div>
+                </div>
+                <div class="right">
+                  <div data-wow="item-right" data-slot="hands"></div>
+                  <div data-wow="item-right" data-slot="waist"></div>
+                  <div data-wow="item-right" data-slot="legs"></div>
+                  <div data-wow="item-right" data-slot="feet"></div>
+                  <div data-wow="item-right" data-slot="finger1"></div>
+                  <div data-wow="item-right" data-slot="finger2"></div>
+                  <div data-wow="item-right" data-slot="trinket1"></div>
+                  <div data-wow="item-right" data-slot="trinket2"></div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+            
+          <!-- WoW Item Tooltips -->
+          <div class="wow-tooltips"></div>
+          
+        </div>
+        
+      </div>
+      
+    </section>
+</main>
+
+<div class="wow-loader">
+  <img src="images/wow/loader_transparent_64.gif" />
+</div>
+<div id="wow-bg"></div>
+<div id="snow"></div>
+
+  <!-- Off-Page Elements -->
+  <div id="page-overlay"></div>
+
+  <!-- JS: Vendor Core -->
+  <script src="scripts/vendor/core/jquery-2.1.4.min.js" type="text/javascript"></script>
+  <script src="scripts/vendor/core/moment.min.js" type="text/javascript"></script>
+  <script src="scripts/vendor/core/js.cookie.js" type="text/javascript"></script>
+  
+  <!-- JS: Vendor Utilities -->
+  <script src="scripts/vendor/utility/awesomplete.min.js" type="text/javascript"></script>
+  
+  <!-- JS: Vendor Animations -->
+  <script src="scripts/vendor/animation/TweenMax.min.js" type="text/javascript"></script>
+
+  <!-- JS: App Core -->
+  <script src="scripts/global/navigation.js" type="text/javascript"></script>
+  
+  <!-- JS: App Content -->
+  <script src="scripts/content/content.js" type="text/javascript"></script>
+  
+  <!-- JS: App WoW -->
+  <script src="wow_config/key.js" type="text/javascript"></script>
+  <script src="scripts/wow/realms.js" type="text/javascript"></script>
+  <script src="scripts/wow/test-wow.js" type="text/javascript"></script>
+  
+</body>

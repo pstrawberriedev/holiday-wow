@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <!-- Meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    
+    <!-- Title -->
+    <title>
+      {{global.title}}
+      {{#if page}} | {{page}} {{/if}}
+       | {{global.desc}}
+    </title>
+
+    <!-- Fonts: Roboto -->
+    <link href="https://fonts.googleapis.com/css?family=Roboto:100,400,700" rel="stylesheet">
+   
+    <!-- CSS: Bundled Core -->
+    <link href="/styles/master.css" rel="stylesheet">
+
+    <!-- Pre-Render JS -->
+
+
+  </head>
+  
+  <body class="{{#if page}}page-{{toLowerCase page}}{{/if}}">
+    
+    <!-- Navigation -->
+    <a id="mobile-menu" href="##">
+      <span class="hammy-special">
+        <span class="fir"></span>
+        <span class="sec"></span>
+        <span class="thi"></span>
+      </span>
+    </a>
+    
+    <ul id="nav-mobile-menu" role="menubar" aria-hidden="true">
+       
+        <!-- Nav Master Links -->
+        <li role="menu">
+          <a href="/">Character Lookup</a>
+        </li>
+        <li aria-haspopup="true" role="menu" data-mobile-opens="a">
+          <a href="##" aria-expanded="false">Resources</a>
+        </li>
+
+        <!-- Nav Submenus -->
+
+        <!-- Ding -->
+        <ul data-mobile-submenu="a" class="second">
+          <li class="back">
+            <a href="##">
+                Back <span class="sr-only">go back to previous menu</span>
+            </a>
+          </li>
+          <li>
+            <a href="https://dev.battle.net/io-docs">Bnet API Docs</a>
+          </li>
+          <li>
+            <a href="https://gist.github.com/Mischanix/d8f7a5f67d1b012987db#file-dump_bonus_stats-lua-L11">Item Stats Reference
+            </a>
+          </li>
+          <li>
+            <a href="https://github.com/Lascorbe/GuildBrowser/blob/master/GuildBrowser/wow%20data.txt">URL References
+            </a>
+          </li>
+          <li>
+            <a href="http://wowwiki.wikia.com/wiki/API_ITEM_QUALITY_COLORS">Item Colors Reference</a>
+          </li>
+        </ul>
+        
+      </ul>
