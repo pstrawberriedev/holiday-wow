@@ -11,10 +11,10 @@ String.prototype.capitalize = function() {
     return this.charAt(0).toUpperCase() + this.slice(1);
 }
 
-// Define WoW UI vars
+// Define Top-Level WoW UI vars
 //
 var $mainSearch = $('.wow-search');
-var $mainLoader = $('.wow-loader.main');
+var $mainLoader = $('.wow-loader');
 var $mainArea = $('.wow-container');
 var $mainError = $('.wow-error.main');
 
@@ -35,13 +35,8 @@ function searchClose() {
 //
 var realmsArray = [];
 function populateRealms() {
-  //console.log(globalRealms.realms);
   for(var i in globalRealms.realms){
-    realmsArray.push({label: globalRealms.realms[i].name, value: globalRealms.realms[i].slug});
-    //$realmSearch.append('<option value="' + globalRealms.realms[i].slug + '">' + globalRealms.realms[i].name + '</option>');
-    //console.log(globalRealms.realms[i].name); //names
-    //console.log(globalRealms.realms[i].slug); //slugs
-    
+    realmsArray.push({label: globalRealms.realms[i].name, value: globalRealms.realms[i].slug}); 
   }
 };
 $(document).ready(function() {
@@ -170,13 +165,35 @@ function getWowFromSearch(info) {
   
   });
   
+  
+  // Keep Track of Characters for Tooltips etc.
+  var activeCharacter = 0;
+  
   // Populate Page with Basic Info
   //
-  var $basicArea = $('.wow-container .hero-basic');
-  var $heroName = $('[data-wow="hero-name"]');
-  var $heroPicture = $('[data-wow="hero-image"]');
-  
   function populateBasicInfo(data) {
+    
+    activeCharacter++;
+    
+    var thisCharacter = 'character' + activeCharacter;
+    console.log('Populating ' + thisCharacter);
+    
+    //Define Some UI Elements
+    var $characterContainerEmpty = $('.hero-empty');
+    var $characterContainer = $('.hero-insert');
+    var $characterPanel = $('.hero-basic');
+    var $heroPicture = $('[data-wow="hero-image"]');
+    var $heroName = $('[data-wow="hero-name"]');
+    var $heroLevel = $('[data-wow="hero-level"]');
+    var $heroServer = $('[data-wow="hero-server"]');
+    var $heroFaction = $('[data-wow="hero-faction"]');
+    var $heroClass = $('[data-wow="hero-class"]');
+    var $heroRace = $('[data-wow="hero-race"]');
+
+    // Add New Character
+    $characterContainerEmpty.clone().appendTo('.hero-container').removeClass('hero-empty').addClass('hero-insert').addClass(thisCharacter).fadeIn(180);
+    
+    // Scope clean classes
     var cleanRace;
     var cleanClass;
     var cleanFaction;
@@ -235,19 +252,19 @@ function getWowFromSearch(info) {
     
     $heroPicture.addClass(cleanFaction.toLowerCase());
     $heroPicture.attr('src', completedImage);
-    $basicArea.fadeIn(180);
+    
     $heroName.html(data.name + ' <br /><span>(' + data.realm + ' / ' + cleanFaction + ')</span>' + '<br />' + '<span>Level ' + data.level + ' ' + ' ' + cleanRace + ' ' + cleanClass + '</span>' + '<br />' + '<span>');
     
     //Insert Character Items
     // http://us.media.blizzard.com/wow/icons/36/[ITEM NAME HERE].jpg
     //
-    var $tooltipContainer = $('#wow-tooltips');
+    var $tooltipContainer = $('.' + thisCharacter + ' .wow-tooltips');
     var $itemsContainer = $('.item-info');
     var $itemLevel = $('[data-wow="item-level"]');
     
     // Reset tooltip container (in case somebody searches back to back)
     $tooltipContainer.html('');
-    $('.item-info [data-wow]').html('');
+    $('.' + thisCharacter + ' .item-info [data-wow]').html('');
     
     // Loop Items
     var heroItems = data.items;
@@ -297,6 +314,7 @@ function getWowFromSearch(info) {
         var tooltipArmor = '';
       }
       
+      //Tooltip Stats - these get populated in a separate loop (below)
       var tooltipStats = '<div class="item-stats ' + slot + '"></div>';
       
       if(name != undefined) {
@@ -313,8 +331,31 @@ function getWowFromSearch(info) {
         
       }
       
-      // Write code to check if anything is unequipped and display "[slot name] (unequipped)"
-      //
+      // Display Tooltips for Unequipped items
+      // - (they don't exist in the item json if they aren't equipped)
+      $('.' + thisCharacter + ' [data-slot]').each(function() {
+        var $self = $(this);
+        var slot = $self.attr('data-slot');
+        var cleanSlotName = slot;
+        
+        switch(cleanSlotName) {
+          case cleanSlotName='offHand': cleanSlotName = 'off Hand';break;
+          case cleanSlotName='finger1': cleanSlotName = 'finger';break;
+          case cleanSlotName='finger2': cleanSlotName = 'finger';break;
+          case cleanSlotName='trinket1': cleanSlotName = 'trinket';break;
+          case cleanSlotName='trinket2': cleanSlotName = 'trinket';break;
+          default: cleanSlotName = slot;
+        }
+        
+        if(!$('[data-wow-tooltip="' + slot + '"]').length) {
+          $tooltipContainer.append(
+            '<div class="item-tooltip" data-wow-tooltip="' + slot + '">' +
+            '<span class="item-name color-item-level">' + cleanSlotName.capitalize() + '</span>' + 
+            '<span class="color-item-poor">Not Equipped</span></div>'
+          );
+        }
+        
+      });
       
     });
     
@@ -322,7 +363,7 @@ function getWowFromSearch(info) {
     $.each(heroItems, function(key, value) {
       var slot = key;
       var stats = value.stats;
-      var $statsContainer = $('.item-stats.' + slot);
+      var $statsContainer = $('.' + thisCharacter + ' .item-stats.' + slot);
       
       // Get item stats from array
       if(stats != undefined) {
@@ -391,6 +432,7 @@ function getWowFromSearch(info) {
             case 65:stats[i].stat = "Unused 7";break;
             case 66:stats[i].stat = "Cleave";break;
             case 67:stats[i].stat = "Versatility";break; 
+            default:stats[i].stat = "(Uknown Stat)";
           }
           $statsContainer.append(
             '<span class="item-stat">+' + stats[i].amount + ' ' + stats[i].stat + '</span>'
@@ -399,20 +441,20 @@ function getWowFromSearch(info) {
       }
     });
     
-  }
-  
-}
-
-// Item Tooltips - Follow Cursor
-//
-$('.item-info [data-wow]').mousemove(function(e) {
-    if ($(this).attr('data-slot') != "") {
+    // Item Tooltips - Follow Cursor
+    //
+    $('.' + thisCharacter + ' .item-info [data-wow]').mousemove(function(e) {
+        if ($(this).attr('data-slot') != "") {
+            var slotName = $(this).attr('data-slot');
+            $('.' + thisCharacter + ' [data-wow-tooltip="' + slotName + '"]').css('left', e.clientX + 10).css('top', e.clientY + 10);
+            $('.' + thisCharacter + ' [data-wow-tooltip="' + slotName + '"]').show();
+        }
+    });
+    $('.' + thisCharacter + ' .item-info [data-wow]').mouseleave(function (e) {
         var slotName = $(this).attr('data-slot');
-        $('[data-wow-tooltip="' + slotName + '"]').css('left', e.clientX + 10).css('top', e.clientY + 10).addClass($(this).attr('class'));
-        $('[data-wow-tooltip="' + slotName + '"]').show();
-    }
-});
-$('.item-info [data-wow]').mouseleave(function (e) {
-    var slotName = $(this).attr('data-slot');
-    $('[data-wow-tooltip="' + slotName + '"]').hide();
-});
+        $('.' + thisCharacter + ' [data-wow-tooltip="' + slotName + '"]').hide();
+    });
+    
+  }//end populateBasicInfo()
+  
+}//end getWowFromSearch()

@@ -39,62 +39,6 @@
 
     <!-- WoW Search Results -->
     <section class="container-fluid wow-container">
-  
-      
-      <div class="row">
-        <div class="col-sm-10 col-sm-push-1 col-xs-12">
-
-          <div class="hero-container">
-            
-            <!-- Hero Header -->
-            <div class="hero-basic clearfix">
-              
-              <div class="basic-info">
-                <img data-wow="hero-image" />
-                <div data-wow="hero-name"></div>
-              </div>
-              
-            </div>
-            
-            <!-- Hero Item Panel -->
-            <div class="hero-basic clearfix">
-              
-              <div class="item-info">
-                <div class="wrapper">
-                  <div class="left">
-                    <div data-wow="item-left" data-slot="head"></div>
-                    <div data-wow="item-left" data-slot="neck"></div>
-                    <div data-wow="item-left" data-slot="shoulder"></div>
-                    <div data-wow="item-left" data-slot="back"></div>
-                    <div data-wow="item-left" data-slot="chest"></div>
-                    <div data-wow="item-left" data-slot="shirt"></div>
-                    <div data-wow="item-left" data-slot="tabard"></div>
-                    <div data-wow="item-left" data-slot="wrist"></div>
-                  </div>
-                  <div class="center">
-                    <div data-wow="item-level"></div>
-                    <div data-wow="item-center" data-slot="mainHand"></div>
-                    <div data-wow="item-center" data-slot="offHand"></div>
-                  </div>
-                  <div class="right">
-                    <div data-wow="item-right" data-slot="hands"></div>
-                    <div data-wow="item-right" data-slot="waist"></div>
-                    <div data-wow="item-right" data-slot="legs"></div>
-                    <div data-wow="item-right" data-slot="feet"></div>
-                    <div data-wow="item-right" data-slot="finger1"></div>
-                    <div data-wow="item-right" data-slot="finger2"></div>
-                    <div data-wow="item-right" data-slot="trinket1"></div>
-                    <div data-wow="item-right" data-slot="trinket2"></div>
-                  </div>
-                </div>
-              </div>
-              
-            </div>
-            
-          </div>
-            
-        </div>
-      </div>
       
       <div class="row">
         <div class="col-sm-10 col-sm-push-1 col-xs-12">
@@ -102,14 +46,73 @@
         </div>
       </div>
       
-      <div class="wow-loader main">
+      <div class="row hero-container">
+        
+        <div class="hero-empty col-sm-4">
+            
+          <!-- Hero Basic Panel -->
+          <div class="hero-panel clearfix">
+
+            <!-- Hero Image -->
+            <img data-wow="hero-image" />
+
+            <!-- Items & Character Meta -->
+            <div class="item-info">
+              <div class="wrapper">
+                <div class="left">
+                  <div data-wow="item-left" data-slot="head"></div>
+                  <div data-wow="item-left" data-slot="neck"></div>
+                  <div data-wow="item-left" data-slot="shoulder"></div>
+                  <div data-wow="item-left" data-slot="back"></div>
+                  <div data-wow="item-left" data-slot="chest"></div>
+                  <div data-wow="item-left" data-slot="shirt"></div>
+                  <div data-wow="item-left" data-slot="tabard"></div>
+                  <div data-wow="item-left" data-slot="wrist"></div>
+                </div>
+                <div class="center">
+                  <div data-wow="hero-meta">
+                    <span data-wow="hero-name"></span>
+                    <span data-wow="hero-level"></span>
+                  </div>
+                  <div data-wow="hero-meta">
+                    <span data-wow="hero-server"></span>
+                    <span data-wow="hero-faction"></span>
+                  </div>
+                  <div data-wow="hero-meta">
+                    <span data-wow="hero-class"></span>
+                    <span data-wow="hero-race"></span>
+                  </div>
+                  <div data-wow="item-level"></div>
+                  <div data-wow="item-center" data-slot="mainHand"></div>
+                  <div data-wow="item-center" data-slot="offHand"></div>
+                </div>
+                <div class="right">
+                  <div data-wow="item-right" data-slot="hands"></div>
+                  <div data-wow="item-right" data-slot="waist"></div>
+                  <div data-wow="item-right" data-slot="legs"></div>
+                  <div data-wow="item-right" data-slot="feet"></div>
+                  <div data-wow="item-right" data-slot="finger1"></div>
+                  <div data-wow="item-right" data-slot="finger2"></div>
+                  <div data-wow="item-right" data-slot="trinket1"></div>
+                  <div data-wow="item-right" data-slot="trinket2"></div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+            
+          <!-- WoW Item Tooltips -->
+          <div class="wow-tooltips"></div>
+          
+        </div>
+        
+      </div>
+      
+      <div class="wow-loader">
         <img src="images/wow/loader_transparent_64.gif" />
       </div>
+      
     </section>
-  
-  <!-- WoW Item Tooltips -->
-  <div id="wow-tooltips"></div>
-  
 </main>
 
 <div id="wow-bg"></div>
