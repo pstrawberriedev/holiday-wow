@@ -1,11 +1,15 @@
 # Holiday WoW!
-An exploration of the battle.net WoW API to get character information
+An exploration of the battle.net WoW API to pull & display character information
 
-## CAUTION
-This project is currently front-end only. Please do not be stupid and post your API key like I'm doing [=
+## Careful!
+This project is front-end only (API key exposed).
 
 ### Requirements
+- A Browser
+- A Brain
 
-- Node JS
-- A few consoles
-- A browser
+### Instructions
+
+- Grab an API key from the Battle.net API site [https://dev.battle.net/](https://dev.battle.net/)
+- Rename the file in /wow_config/ to key.js
+- Put your API key in the now-renamed key.js
