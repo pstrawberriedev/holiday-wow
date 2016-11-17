@@ -109,6 +109,9 @@ function buildUrl(calltype, server, name) {
   
 }
 
+// Keep Track of Characters for Tooltips etc.
+var activeCharacter = 0;
+
 // WoW ajax call
 // - Grab Character Basic Info + Character Items
 //
@@ -165,33 +168,28 @@ function getWowFromSearch(info) {
   
   });
   
-  
-  // Keep Track of Characters for Tooltips etc.
-  var activeCharacter = 0;
-  
   // Populate Page with Basic Info
   //
   function populateBasicInfo(data) {
     
-    activeCharacter++;
-    
     var thisCharacter = 'character' + activeCharacter;
+    var thisCharacterClass = '.character' + activeCharacter;
     console.log('Populating ' + thisCharacter);
     
-    //Define Some UI Elements
-    var $characterContainerEmpty = $('.hero-empty');
-    var $characterContainer = $('.hero-insert');
-    var $characterPanel = $('.hero-basic');
-    var $heroPicture = $('[data-wow="hero-image"]');
-    var $heroName = $('[data-wow="hero-name"]');
-    var $heroLevel = $('[data-wow="hero-level"]');
-    var $heroServer = $('[data-wow="hero-server"]');
-    var $heroFaction = $('[data-wow="hero-faction"]');
-    var $heroClass = $('[data-wow="hero-class"]');
-    var $heroRace = $('[data-wow="hero-race"]');
-
     // Add New Character
-    $characterContainerEmpty.clone().appendTo('.hero-container').removeClass('hero-empty').addClass('hero-insert').addClass(thisCharacter).fadeIn(180);
+    var $characterContainerEmpty = $('.hero-empty');
+    $characterContainerEmpty.clone().appendTo('.hero-container').removeClass('hero-empty').addClass('hero-insert ' + thisCharacter).fadeIn(180);
+    
+    //Define Some UI Elements
+    var $characterContainer = $(thisCharacterClass + ' .hero-insert ');
+    var $characterPanel = $(thisCharacterClass + ' .hero-basic');
+    var $heroPicture = $(thisCharacterClass + ' [data-wow="hero-image"]');
+    var $heroName = $(thisCharacterClass + ' [data-meta="hero-name"]');
+    var $heroLevel = $(thisCharacterClass + ' [data-meta="hero-level"]');
+    var $heroServer = $(thisCharacterClass + ' [data-meta="hero-server"]');
+    var $heroFaction = $(thisCharacterClass + ' [data-meta="hero-faction"]');
+    var $heroClass = $(thisCharacterClass + ' [data-meta="hero-class"]');
+    var $heroRace = $(thisCharacterClass + ' [data-meta="hero-race"]');
     
     // Scope clean classes
     var cleanRace;
@@ -244,6 +242,14 @@ function getWowFromSearch(info) {
       default: cleanClass = 'Unknown Class'; break;
     }
     
+    //Insert Character Meta
+    $heroName.html(data.name);
+    $heroLevel.html('Level ' + data.level);
+    $heroServer.html(data.realm);
+    $heroFaction.addClass(cleanFaction.toLowerCase()).html(cleanFaction);
+    $heroClass.html(cleanClass);
+    $heroRace.html(cleanRace);
+    
     //Insert Character Image
     var crudeImage = data.thumbnail ? data.thumbnail : '';
     var baseImageUrl = 'http://render-api-us.worldofwarcraft.com/static-render/us/';
@@ -253,18 +259,16 @@ function getWowFromSearch(info) {
     $heroPicture.addClass(cleanFaction.toLowerCase());
     $heroPicture.attr('src', completedImage);
     
-    $heroName.html(data.name + ' <br /><span>(' + data.realm + ' / ' + cleanFaction + ')</span>' + '<br />' + '<span>Level ' + data.level + ' ' + ' ' + cleanRace + ' ' + cleanClass + '</span>' + '<br />' + '<span>');
-    
     //Insert Character Items
     // http://us.media.blizzard.com/wow/icons/36/[ITEM NAME HERE].jpg
     //
-    var $tooltipContainer = $('.' + thisCharacter + ' .wow-tooltips');
-    var $itemsContainer = $('.item-info');
-    var $itemLevel = $('[data-wow="item-level"]');
+    var $tooltipContainer = $(thisCharacterClass + ' .wow-tooltips');
+    var $itemsContainer = $(thisCharacterClass + ' .item-info');
+    var $itemLevel = $(thisCharacterClass + ' [data-wow="item-level"]');
     
     // Reset tooltip container (in case somebody searches back to back)
     $tooltipContainer.html('');
-    $('.' + thisCharacter + ' .item-info [data-wow]').html('');
+    $(thisCharacterClass + ' .item-info [data-wow]').html('');
     
     // Loop Items
     var heroItems = data.items;
@@ -293,7 +297,7 @@ function getWowFromSearch(info) {
       }
       
       if(name != undefined) { //populate images, skip item levels 
-        $('[data-slot="' + slot + '"]').html('<img src="' + itemBaseUrl + icon + '.jpg" />');
+        $(thisCharacterClass + ' [data-slot="' + slot + '"]').html('<img src="' + itemBaseUrl + icon + '.jpg" />');
       }
       
       if(slot === 'averageItemLevelEquipped') {
@@ -333,7 +337,7 @@ function getWowFromSearch(info) {
       
       // Display Tooltips for Unequipped items
       // - (they don't exist in the item json if they aren't equipped)
-      $('.' + thisCharacter + ' [data-slot]').each(function() {
+      $('.character' + activeCharacter + ' [data-slot]').each(function() {
         var $self = $(this);
         var slot = $self.attr('data-slot');
         var cleanSlotName = slot;
@@ -347,7 +351,7 @@ function getWowFromSearch(info) {
           default: cleanSlotName = slot;
         }
         
-        if(!$('[data-wow-tooltip="' + slot + '"]').length) {
+        if(!$('.character' + activeCharacter + ' [data-wow-tooltip="' + slot + '"]').length) {
           $tooltipContainer.append(
             '<div class="item-tooltip" data-wow-tooltip="' + slot + '">' +
             '<span class="item-name color-item-level">' + cleanSlotName.capitalize() + '</span>' + 
@@ -363,7 +367,7 @@ function getWowFromSearch(info) {
     $.each(heroItems, function(key, value) {
       var slot = key;
       var stats = value.stats;
-      var $statsContainer = $('.' + thisCharacter + ' .item-stats.' + slot);
+      var $statsContainer = $('.character' + activeCharacter + ' .item-stats.' + slot);
       
       // Get item stats from array
       if(stats != undefined) {
@@ -454,6 +458,8 @@ function getWowFromSearch(info) {
         var slotName = $(this).attr('data-slot');
         $('.' + thisCharacter + ' [data-wow-tooltip="' + slotName + '"]').hide();
     });
+    
+    activeCharacter++;
     
   }//end populateBasicInfo()
   

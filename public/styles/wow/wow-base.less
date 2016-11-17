@@ -143,6 +143,7 @@
     color:@color-light;
     padding:.6rem;
     margin:0 auto;
+    margin-bottom:1rem;
     
     [data-wow] span { font-size:.9rem; }
     
@@ -154,8 +155,9 @@
     [data-wow=hero-image] {
       height:auto;
       display:block;
-      margin:0 .65rem .65rem 0;
-      max-width: 100%;
+      margin:0 auto;
+      margin-bottom:.6rem;
+      max-width: 96%;
         //&.horde {border-bottom: 3px solid #aa3333;}
         //&.alliance {border-bottom: 3px solid #3333aa;}
     }
@@ -219,7 +221,7 @@
         }
       }
       
-      [data-wow=item-level] {
+      [data-wow=item-level], .hero-meta {
         display: block;
         position: relative;
         text-align: center;
@@ -227,15 +229,27 @@
         text-transform: uppercase;
         width: 80%;
         margin: 0 auto;
-        border: 1px solid #666;
         padding-top: 7px;
-        background: #002200;
+        background: rgba(0,0,0,.4);
+        .shadow-2;
           span {
             .font-primary-thin;
             text-transform:none;
             font-size:2rem;
             display:block;
           }
+      }
+      .hero-meta {
+        padding:2px;
+        margin-bottom:1rem;
+        span {
+          font-size:.9rem;
+        }
+      }
+      span[data-meta=hero-faction] {
+        .font-primary-bold;
+        &.alliance {.color-alliance}
+        &.horde {.color-horde}
       }
     
       //Backgrounds for commonly unequipped items
@@ -257,6 +271,7 @@
 .item-tooltip {
   display:none;
   position:fixed;
+  z-index:900;
   width:196px;
   padding:.5rem;
   font-size:.9rem;
