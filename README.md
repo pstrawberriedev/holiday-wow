@@ -6,7 +6,6 @@ This project is front-end only (API key exposed).
 
 ### Requirements for Use
 - A Browser
-- A Brain
 
 ### Requirements for further exploration
 - Node JS
